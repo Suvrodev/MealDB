@@ -1,6 +1,6 @@
 
-const LoadMeals=()=>{
-    const url='https://www.themealdb.com/api/json/v1/1/search.php?s=fish';
+const LoadMeals=(url)=>{
+   // const url='https://www.themealdb.com/api/json/v1/1/search.php?s=fish';
     fetch(url)
     .then(res=>res.json())
     .then(Data=>DisplayMeals(Data.meals))
@@ -8,6 +8,7 @@ const LoadMeals=()=>{
 
 const DisplayMeals=(Data)=>{
     const MealsContainer=document.getElementById('meals_container');
+    MealsContainer.innerHTML=''
 
     Data.forEach(data=>{
         console.log(data.strMeal)
@@ -29,4 +30,12 @@ const DisplayMeals=(Data)=>{
     })
 }
 
-LoadMeals()
+
+
+
+const SearchButton=document.getElementById('searchbtn');
+SearchButton.addEventListener('click',()=>{
+    const Text=document.getElementById('searchfield').value;
+    console.log(Text)
+    LoadMeals(`https://www.themealdb.com/api/json/v1/1/search.php?s=${Text}`)
+})
