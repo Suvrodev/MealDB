@@ -10,6 +10,24 @@ const LoadOneMeal=(url)=>{
     fetch(url)
     .then(res=>res.json())
     .then(data=>OneMealDetail(data.meals[0]))
+    .catch(err=>console.log(`Error: ${err}`))
+}
+
+const Load1Meal= async(url)=>{
+    // fetch(url)
+    // .then(res=>res.json())
+    // .then(data=>OneMealDetail(data.meals[0]))
+    // .catch(err=>console.log(`Error: ${err}`))
+   try{
+    const res=await fetch(url)
+    const Data=await res.json();
+    OneMealDetail(Data.meals[0])
+   }catch(error){
+      console.log(`Error: ${error}`)
+
+   }
+
+
 }
 
 const OneMealDetail= Data=>{
@@ -23,7 +41,7 @@ const OneMealDetail= Data=>{
 
 const LoadSpecificmeal=(Data)=>{
     console.log(Data)
-    LoadOneMeal(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${Data}`)
+    Load1Meal(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${Data}`)
 }
 
 const DisplayMeals=(Data)=>{
@@ -62,4 +80,14 @@ SearchButton.addEventListener('click',()=>{
     const Text=document.getElementById('searchfield').value;
     console.log(Text)
     LoadMeals(`https://www.themealdb.com/api/json/v1/1/search.php?s=${Text}`)
+})
+
+
+///Enter Button Work
+document.getElementById('searchfield').addEventListener('keypress',(e)=>{
+    if(e.key=='Enter'){
+        const Text=document.getElementById('searchfield').value;
+        console.log(Text)
+        LoadMeals(`https://www.themealdb.com/api/json/v1/1/search.php?s=${Text}`)
+    }
 })
